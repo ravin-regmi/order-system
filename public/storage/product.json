@@ -1,0 +1,13 @@
+[
+	{"id":1,"name":"Sunflower Oil","category_id":1,"image":"https://i.pinimg.com/564x/bf/58/1a/bf581a03c6b06ceb880f07f13b27c56f.jpg","info":"This is healthy sunflower oil"},
+	{"id":2,"name":"Jeans","category_id":2,"image":"https://i.pinimg.com/originals/75/49/9a/75499ab97845410698703f4787154249.png"},
+	{"id":3,"name":"MAc book pro","category_id":3,"image":"https://i.pinimg.com/736x/13/e4/5b/13e45becbcda8bc55ecd406cd08dd09c.jpg","info":"latest version of mac book"},
+	{"id":4,"name":"Mango","category_id":1,"image":"https://i.pinimg.com/originals/01/f3/93/01f39339b893a4e9415c05cb1020427b.jpg","info":"Get fresh mangos"},
+	{"id":5,"name":"Shirt","category_id":2,"image":"https://picture-cdn.wheretoget.it/1vreoi-l-610x610-shirt-tee-teeshirt-beauty--everythinghasbeauty-pinterest-tumblr-instagram-casual-feminine-white-coffee-necklace-beautiful.jpg"},
+	{"id":6,"name":"Goldstar Shoe","category_id":2,"image":"https://i.pinimg.com/236x/ed/e0/01/ede0016614bb07a7afcfec71003ae40f--comfortable-shoes-ranges.jpg","info":"cost affordable shoes"},
+	{"id":7,"name":"Samsung Note 8","category_id":3,"image":"https://i.pinimg.com/736x/bf/34/02/bf34025bdd0232b5233189766ba44c72.jpg","info":"explosive phone cum phablet"},
+	{"id":8,"name":"Apple","category_id":1,"image":"https://i.pinimg.com/474x/d2/1b/5e/d21b5e15eb1d4fdd5abd59303bb90af5.jpg","info":"fresh fruit for your health, saves your gf from doctor"},
+	{"id":9,"name":"Cashew Nuts","category_id":1,"info":"nuts"},
+	{"id":10,"name":"Potatoes","category_id":1},
+	{"id":10,"name":"Beer","category_id":5,"image":"https://i.pinimg.com/originals/95/55/16/955516b569aa4bc5378ce4e4d936d3dc.png"}
+]
