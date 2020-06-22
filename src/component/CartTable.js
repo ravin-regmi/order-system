@@ -19,6 +19,10 @@ export default function CartTable(props) {
 		cart.deleteCart(product);
 	}
 
+	let cartCount = 0;
+	cart.cart.forEach(_ => ++cartCount);
+	console.log("cartCount", cartCount)
+
 	return (
 		<table className="table" style={{marginTop:'.5rem'}}>
           <thead>
@@ -30,7 +34,7 @@ export default function CartTable(props) {
             </tr>
           </thead>
           <tbody>
-          	{cartHtml}
+          	{cartCount > 0 ? cartHtml : (<tr><td className="text-muted font-weight-normal font-italic d-block">Cart Empty</td></tr>)}
           </tbody>
         </table>
 	);
@@ -98,7 +102,12 @@ class CartItem extends React.Component {
                   </div>
                 </div>
               </th>
-              <td className="border-0 align-middle"><strong>$79.00</strong></td>
+              <td className="border-0 align-middle">
+              	<div className="d-inline-block align-middle">
+              		<p className="font-weight-bold">{this.props.cartItem.product.currency + parseFloat(this.props.cartItem.product.price)*this.state.quantity}</p>
+              		<small className="text-muted">Rate: {this.props.cartItem.product.currency + this.props.cartItem.product.price}</small>
+              	</div>
+              </td>
               <td className="border-0 align-middle">
               	<button className="btn btn-info more-btn btn-sm" onClick={this.increaseQuantity}>+</button>
               	<input className="form-control" value={this.state.quantity} onChange={this.quantityChange} />
@@ -106,7 +115,7 @@ class CartItem extends React.Component {
               </td>
               <td className="border-0 align-middle">
               	<button className="border-0" onClick={this.removeProduct} style={{background: 'none'}}>
-              		<i className="fa fa-trash"></i>
+              		<i className="fa fa-trash" style={{color: 'red'}}></i>
               	</button>
               </td>
             </tr>

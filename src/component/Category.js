@@ -4,37 +4,14 @@ import Product from './Product';
 
 class CategoryList extends React.Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {categoryList: [], productList: []};
-	}
-
-	componentDidMount() {
-		async function fetchData(that) {
-			
-			const categoryFile = await fetch('/storage/category.json');
-			const categoryArr = await categoryFile.json();
-
-			const productFile = await fetch('/storage/product.json');
-			const productArr = await productFile.json();
-
-			that.setState({categoryList: categoryArr, productList: productArr});
-		}
-		fetchData(this);
-	}
-
 	render() {
-		let productArrCat = []; 
-		this.state.productList.forEach(product => {
-			if (!productArrCat[product.category_id]) {
-				productArrCat[product.category_id] = [];
+
+		const categoryHtml = this.props.categoryList.map(category => {
+			if (this.props.categoryFilter && category.id !== +this.props.categoryFilter) {
+				return null;
 			}
-			productArrCat[product.category_id].push(product);
+			return <Category key={category.id} category={category} products={this.props.products[category.id]} />
 		});
-		const categoryHtml = this.state.categoryList.map(category => {
-			return <Category key={category.id} category={category} products={productArrCat[category.id]} />
-		});
-		
 		  
 		return (
 			<>

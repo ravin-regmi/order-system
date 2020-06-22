@@ -34,7 +34,8 @@ export default function Product(props) {
 			  	style={{maxWidth:'206px',maxHeight:'137px'}} />
 			  <div className="card-body padding-0">
 			    <h5 className="card-title">{props.product.name}</h5>
-			    <p className="card-text">{props.product.info}</p>
+			    <p className="card-text margin-0">{props.product.info}</p>
+			    <p className="font-italic badge badge-warning text-danger">{props.product.currency + ' ' + props.product.price}</p>
 			    <div className="action-wrapper">
 			    	<button className="btn btn-info btn-sm" onClick={(e) => productDetail(e, props.product.id)}>View Details</button>
 			    	<button className={`btn ${cartBtnClass} btn-sm pull-right`} onClick={(e) => addToCart(e)} >{cartBtnText}</button>
