@@ -1,8 +1,38 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const defaultImg = "https://images.all-free-download.com/images/graphiclarge/small_mouse_macro_515329.jpg";
 
-export default class Modal extends React.Component {
+export default function Modal(props) {
+
+	const [showModal, setShowModal] = useState(false);
+
+	function productDetail(e, id) {
+		e.preventDefault();
+		setShowModal(true);
+	}
+
+	const removeModal = () => { setShowModal(false); }
+
+	const modalHtml = showModal ? <ModalComponent product={props.product} removeModal={removeModal} /> : null;
+
+	const btnClass = props.btnClass ?? "btn btn-info btn-sm";
+	const btnText = props.btnText ?? "View Details";
+	let btnHtml = null;
+	if (props.btnHtml === 'a') {
+		btnHtml = <a className={btnClass} onClick={(e) => productDetail(e, props.product.id)} style={{cursor: 'pointer'}}>{btnText}</a>;
+	} else {
+		btnHtml = <button className={btnClass} onClick={(e) => productDetail(e, props.product.id)}>{btnText}</button>;
+	}
+
+	return (
+		<>
+		{btnHtml}
+		{modalHtml}
+		</>
+	);
+}
+
+class ModalComponent extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -56,6 +86,9 @@ export default class Modal extends React.Component {
 			      		<img src={this.props.product.image ?? defaultImg} alt={this.props.product.name} style={{maxWidth:'450px', maxheight: '600px'}} />
 			      	</p>
 			        <p>{this.props.product.info}</p>
+			        <p>Price: 
+			        	<span className="font-italic badge badge-warning text-danger">{this.props.product.currency} {this.props.product.price}</span>
+			        </p>
 			      </div>
 			      <div className="modal-footer">
 			        <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.closeModal}>Close</button>

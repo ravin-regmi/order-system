@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {CartContext, CartProvider} from '../context/Cart';
+import Modal from './Modal';
 
 export default function CartTable(props) {
 	
@@ -109,9 +110,9 @@ class CartItem extends React.Component {
                   <img src={this.props.cartItem.product.image} alt={this.props.cartItem.product.name} width="70"
                    className="img-fluid rounded shadow-sm" />
                   <div className="d-inline-block align-middle">
-                    <p className="mb-0">
-                     <a href="#" className="text-dark d-inline-block align-middle">{this.props.cartItem.product.name}</a>
-                    </p>
+                    <div className="mb-0">
+                      <Modal product={this.props.cartItem.product} btnClass="text-dark d-inline-block align-middle" btnText={this.props.cartItem.product.name} btnHtml="a" />
+                    </div>
                     <span className="text-muted font-weight-normal font-italic d-block" style={{fontSize:'13px'}}>
                     Category: <a href="#" value={this.props.category.id} onClick={this.categoryClick}>{this.props.category.name}</a>
                     </span>
