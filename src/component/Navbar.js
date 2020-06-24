@@ -9,8 +9,11 @@ export default class Navbar extends React.Component {
 		this.selectCategory = React.createRef();
 		this.categoryChange = this.categoryChange.bind(this);
 		this.removeCategoryFilter = this.removeCategoryFilter.bind(this);
+		this.productSearchValueChange = this.productSearchValueChange.bind(this);
 		this.productSearch = this.productSearch.bind(this);
 		this.removeProductFilter = this.removeProductFilter.bind(this);
+		this.productSearchKeyDown = this.productSearchKeyDown.bind(this);
+		this.state = {productFilter: ''};
 	}
 
 	categoryChange(e) {
@@ -21,18 +24,32 @@ export default class Navbar extends React.Component {
 		this.props.categoryChange(null);
 	}
 
+	productSearchValueChange(e) {
+		this.setState({productFilter: e.target.value});
+	}
+
 	productSearch(e) {
-		this.props.productSearch(e.target.value);
+		this.props.productSearch(this.state.productFilter);
+	}
+
+	productSearchKeyDown(e) {
+		if (e.which === 13) {
+			this.productSearch();
+		}
 	}
 
 	removeProductFilter(e) {
+		this.setState({productFilter: ''});
 		this.props.productSearch('');
 	}
 
 	render() {
+
 		let categoryFilterLabel = null;
+		let selectedCategory = "null";
 		const categoryOptHtml = this.props.categoryList.map(category => {
 			if (this.props.categoryFilter && category.id === +this.props.categoryFilter) {
+				selectedCategory = category.id;
 				categoryFilterLabel = <label className="badge badge-info" title="Click to remove" onClick={this.removeCategoryFilter}>{category.name}</label>
 			}
 			return <option key={category.id} value={category.id}>{category.name}</option>;
@@ -55,7 +72,7 @@ export default class Navbar extends React.Component {
 			      </li>
 			      <li className="nav-item">
 			      	<div className="form-group post-input">
-				        <select className="form-control" ref={this.selectCategory} onChange={this.categoryChange}>
+				        <select className="form-control" ref={this.selectCategory} onChange={this.categoryChange} value={selectedCategory}>
 				        	<option value="null">-- Select Category -- </option>
 				        	{categoryOptHtml}
 				        </select>
@@ -64,7 +81,8 @@ export default class Navbar extends React.Component {
 			      </li>
 			      <li>
 			      	<div className="form-group post-input">
-			      		<input className="form-control" placeholder="Type to search product..." onBlur={this.productSearch} defaultValue={this.props.productFilter} />
+			      		<input className="form-control" placeholder="Type to search product..." value={this.state.productFilter}
+			      			onBlur={this.productSearch} onChange={this.productSearchValueChange} onKeyDown={this.productSearchKeyDown} />
 			      		{productFilterLabel}
 			      	</div>
 			      </li>

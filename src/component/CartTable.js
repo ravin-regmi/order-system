@@ -6,9 +6,18 @@ export default function CartTable(props) {
 	
 	// const cart = useCart(); 
 	// console.log("cart.cart", cart.cart)
+
+	const categoryList = [];
+	props.categoryList.forEach(category => {
+		categoryList[category.id] = category;
+	});
+
 	const cart = React.useContext(CartContext);
 	const cartHtml = cart.cart.map(item => {
-		return item ? <CartItem key={item.id} cartItem={item} quantityChange={quantityChange} removeProduct={removeProduct} /> : null;
+		return item 
+			? <CartItem key={item.id} cartItem={item} category={categoryList[item.product.category_id]} 
+				quantityChange={quantityChange} removeProduct={removeProduct} categoryChange={props.categoryChange} /> 
+			: null;
 	});
 
 	function quantityChange(product, quantity) {
@@ -21,7 +30,6 @@ export default function CartTable(props) {
 
 	let cartCount = 0;
 	cart.cart.forEach(_ => ++cartCount);
-	console.log("cartCount", cartCount)
 
 	return (
 		<table className="table" style={{marginTop:'.5rem'}}>
@@ -57,6 +65,7 @@ class CartItem extends React.Component {
 		this.increaseQuantity = this.increaseQuantity.bind(this);
 		this.decreaseQuantity = this.decreaseQuantity.bind(this);
 		this.removeProduct = this.removeProduct.bind(this);
+		this.categoryClick = this.categoryClick.bind(this);
 	}
 
 	quantityChange(e) {
@@ -86,6 +95,11 @@ class CartItem extends React.Component {
 	removeProduct() {
 		this.props.removeProduct(this.props.cartItem.product);
 	}
+
+	categoryClick(e) {
+		e.preventDefault();
+		this.props.categoryChange(+e.target.getAttribute('value'));
+	}
 	
 	render() {
 		return (
@@ -98,7 +112,9 @@ class CartItem extends React.Component {
                     <p className="mb-0">
                      <a href="#" className="text-dark d-inline-block align-middle">{this.props.cartItem.product.name}</a>
                     </p>
-                    <span className="text-muted font-weight-normal font-italic d-block" style={{fontSize:'13px'}}>Category: Watches</span>
+                    <span className="text-muted font-weight-normal font-italic d-block" style={{fontSize:'13px'}}>
+                    Category: <a href="#" value={this.props.category.id} onClick={this.categoryClick}>{this.props.category.name}</a>
+                    </span>
                   </div>
                 </div>
               </th>

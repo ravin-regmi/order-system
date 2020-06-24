@@ -3,8 +3,9 @@ import {BrowserRouter} from 'react-router-dom';
 
 import Navbar from './Navbar';
 import {CategoryList} from './Category';
-import Cart from './Cart';
+// import Cart from './Cart';
 import {CartProvider} from '../context/Cart';
+const Cart = React.lazy(() => import('./Cart'));
 
 export default class OrderSystem extends React.Component {
 
@@ -47,14 +48,14 @@ export default class OrderSystem extends React.Component {
 			let match = true;
 			if (this.state.productFilter !== "") {
 				const prodArr = product.name.split(' ');
-				prodArr.forEach(item => {
-					if (item.toLowerCase().indexOf(this.state.productFilter.toLowerCase()) > -1) {
+				for(let item in prodArr) {
+					if (prodArr[item].toLowerCase().indexOf(this.state.productFilter.toLowerCase()) > -1) {
 						match = true;
-						return;
+						break;
 					} else {
 						match = false;
 					}
-				})
+				}
 			}
 			if (!match) {
 				return;
@@ -77,7 +78,9 @@ export default class OrderSystem extends React.Component {
 							<CategoryList products={productArrCat} {...categoryObj} />
 						</div>
 						<div className="col-md-5 cart-list-wrapper">
-							<Cart categoryList={this.categoryList} />
+							<React.Suspense fallback={<p>Loading Cart...</p>}>
+								<Cart categoryList={this.state.categoryList} categoryChange={this.categoryChange} />
+							</React.Suspense>
 						</div>
 					</div>
 				</BrowserRouter>
